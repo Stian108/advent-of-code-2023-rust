@@ -2,6 +2,7 @@
 #![feature(adt_const_params)]
 
 pub mod day1;
+pub mod day2;
 
 use std::{fmt::Debug, str::FromStr};
 
