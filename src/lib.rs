@@ -3,6 +3,7 @@
 
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 use std::{fmt::Debug, str::FromStr};
 
@@ -15,17 +16,12 @@ pub struct VecP<T, const P: &'static str = "\n">(Vec<T>);
 impl<T: std::str::FromStr, const P: &'static str> FromStr for VecP<T, P> {
     type Err = T::Err;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self(
-            s.split(P)
-                .filter_map(|v| {
-                    let trimmed = v.trim();
-                    if trimmed.is_empty() {
-                        None
-                    } else {
-                        Some(trimmed.parse())
-                    }
-                })
-                .collect::<Result<_, Self::Err>>()?,
-        ))
+        s.split(P)
+            .filter_map(|v| {
+                let trimmed = v.trim();
+                (!trimmed.is_empty()).then_some(trimmed.parse())
+            })
+            .collect::<Result<_, Self::Err>>()
+            .map(Self)
     }
 }
