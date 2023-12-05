@@ -31,10 +31,10 @@ pub fn part1(inp: &Input) -> usize {
             num += d;
             for di in -1..=1 {
                 for dj in -1..=1 {
-                    let ni = i as isize + di;
-                    let nj = j as isize + dj;
-                    if ni > 0 && nj > 0 {
-                        if let Some(&x) = inp.get((ni as usize, nj as usize)) {
+                    if let (Some(ni), Some(nj)) =
+                        (i.checked_add_signed(di), j.checked_add_signed(dj))
+                    {
+                        if let Some(&x) = inp.get((ni, nj)) {
                             if !x.is_digit(10) && x != '.' {
                                 include = true;
                             }
@@ -73,12 +73,12 @@ pub fn part2(inp: &Input) -> usize {
             num += d as usize;
             for di in -1..=1 {
                 for dj in -1..=1 {
-                    let ni = i as isize + di;
-                    let nj = j as isize + dj;
-                    if ni > 0 && nj > 0 {
-                        if let Some(&x) = inp.get((ni as usize, nj as usize)) {
+                    if let (Some(ni), Some(nj)) =
+                        (i.checked_add_signed(di), j.checked_add_signed(dj))
+                    {
+                        if let Some(&x) = inp.get((ni, nj)) {
                             if x == '*' {
-                                include.insert((ni as usize, nj as usize));
+                                include.insert((ni, nj));
                             }
                         }
                     }
